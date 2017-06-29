@@ -44,6 +44,6 @@ class Service(models.Model):
     gps_lon = models.FloatField()
 
     def __str__(self):
-        return self.name
+        return self.description
 
 
