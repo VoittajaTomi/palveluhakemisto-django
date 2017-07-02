@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="980b110c-16df-4820-b100-a5e53faa2634" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/services/templates/services/add_service.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/services/templates/services/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/services/templates/services/view_service.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/palveluhakemisto.iml" afterPath="$PROJECT_DIR$/.idea/palveluhakemisto.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/palveluhakemisto/settings.py" afterPath="$PROJECT_DIR$/palveluhakemisto/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/services/models.py" afterPath="$PROJECT_DIR$/services/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/services/urls.py" afterPath="$PROJECT_DIR$/services/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/services/views.py" afterPath="$PROJECT_DIR$/services/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -31,8 +20,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/services/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="416">
-              <caret line="26" column="0" lean-forward="true" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+            <state relative-caret-position="320">
+              <caret line="20" column="8" lean-forward="true" selection-start-line="20" selection-start-column="8" selection-end-line="20" selection-end-column="8" />
               <folding>
                 <element signature="e#24#63#0" expanded="true" />
               </folding>
@@ -90,7 +79,7 @@
         <entry file="file://$PROJECT_DIR$/services/templates/services/view_service.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="224">
-              <caret line="14" column="25" lean-forward="true" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
+              <caret line="14" column="25" lean-forward="false" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -414,6 +403,14 @@
       <option name="presentableId" value="Default" />
       <updated>1498730118528</updated>
     </task>
+    <task id="LOCAL-00001" summary="form">
+      <created>1499031075532</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1499031075532</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -442,6 +439,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="form" />
+    <option name="LAST_COMMIT_MESSAGE" value="form" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -788,7 +789,7 @@
     <entry file="file://$PROJECT_DIR$/services/templates/services/view_service.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="224">
-          <caret line="14" column="25" lean-forward="true" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
+          <caret line="14" column="25" lean-forward="false" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
           <folding />
         </state>
       </provider>
@@ -803,8 +804,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/services/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="26" column="0" lean-forward="true" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+        <state relative-caret-position="320">
+          <caret line="20" column="8" lean-forward="true" selection-start-line="20" selection-start-column="8" selection-end-line="20" selection-end-column="8" />
           <folding>
             <element signature="e#24#63#0" expanded="true" />
           </folding>
