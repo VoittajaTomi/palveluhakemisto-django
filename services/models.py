@@ -4,6 +4,8 @@ from __future__ import unicode_literals
 from django.db import models
 
 # Create your models here.
+import floppyforms.__future__ as forms
+
 """
 
     __tablename__ = 'services'
@@ -47,3 +49,8 @@ class Service(models.Model):
         return self.description
 
 
+
+class AnonymousServiceForm(forms.ModelForm):
+    class Meta:
+        model = Service
+        fields = ('description', 'district', 'address', 'gps_lat', 'gps_lon')

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    	<style>
+        html, body, #map {
+            width: 100%; height: 100%; padding: 0; margin: 0;
+        }
+    </style>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=en_RU" type="text/javascript"></script>
+</head>
+<body>
+Service:
+{{ service.description }}
+<div id="map"></div>
+
+<script>
+    ymaps.ready(init);
+
+function init() {
+    var myMap = new ymaps.Map("map", {
+            center: [{{ service.gps_lat }}, {{ service.gps_lon }}],
+            zoom: 10
+        }, {
+            //searchControlProvider: 'yandex#search'
+        }),
+
+    // Creating a geo object with the "Point" geometry type.
+        myGeoObject = new ymaps.GeoObject({
+            // The geometry description.
+            geometry: {
+                type: "Point",
+                coordinates: [55.8, 37.8]
+            },
+            // Properties.
+            properties: {
+                // The placemark content.
+                iconContent: 'I\'m draggable',
+                hintContent: 'Come on, drag already!'
+            }
+        }, {
+            /**
+             * Options.
+             * The placemark's icon will stretch to fit its contents.
+             */
+            preset: 'islands#blackStretchyIcon',
+            // The placemark can be dragged.
+            draggable: true
+        }),
+        myPieChart = new ymaps.Placemark([
+            55.847, 37.6
+        ], {
+            // Data for generating a diagram.
+            data: [
+                {weight: 8, color: '#0E4779'},
+                {weight: 6, color: '#1E98FF'},
+                {weight: 4, color: '#82CDFF'}
+            ],
+            iconCaption: "Diagram"
+        }, {
+            // Defining a custom placemark layout.
+            iconLayout: 'default#pieChart',
+            // Radius of the diagram, in pixels.
+            iconPieChartRadius: 30,
+            // The radius of the central part of the layout.
+            iconPieChartCoreRadius: 10,
+            // Fill style for the core.
+            iconPieChartCoreFillStyle: '#ffffff',
+            // The style for lines between sectors and the outline of the diagram.
+            iconPieChartStrokeStyle: '#ffffff',
+            // Width of the sector dividing lines and diagram outline.
+            iconPieChartStrokeWidth: 3,
+            // Maximum width of the placemark caption.
+            iconPieChartCaptionMaxWidth: 200
+        });
+
+    myMap.geoObjects
+        .add(new ymaps.Placemark([{{ service.gps_lat }}, {{ service.gps_lon }}], {
+            balloonContent: 'the color of <strong>the water on Bondi Beach</strong>'
+        }, {
+            preset: 'islands#icon',
+            iconColor: '#0095b6'
+        }));
+}
+
+</script>
+</body>
+</html>
