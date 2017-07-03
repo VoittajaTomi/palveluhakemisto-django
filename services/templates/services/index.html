@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+Districts:
+<ul>
+    {% for d in districts %}
+
+    <li>{{ d.name }}</li>
+
+    {% endfor %}
+</ul>
+Services:
+<ul>
+    {% for s in services %}
+
+    <li>{{ s.description }}</li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>
