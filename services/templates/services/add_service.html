@@ -9,8 +9,10 @@
 <body>
 Add service:
 
-
-{% form myform %}
-
+<form action="/services/add" method="post">
+{% csrf_token %}
+    {% form myform %}
+<input type="submit" value="SUBMIT">
+    </form>
 </body>
 </html>
