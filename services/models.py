@@ -35,6 +35,8 @@ class District(models.Model):
     description = models.CharField(max_length=50)
     name = models.CharField(max_length=50)
     shortname = models.CharField(max_length=50)
+    ctr_lat = models.FloatField()
+    ctr_lon = models.FloatField()
 
     def __str__(self):
         return self.name

@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.template import loader
 # Create your views here.
 from .models import District, Service, AnonymousServiceForm
 
@@ -16,6 +15,16 @@ def index(request):
     context = {'districts': districts, 'services': services}
 
     return render(request, 'services/index.html', context)
+
+def view_district(request, district_id):
+    #return HttpResponse("Hello " + district_id)
+
+    try:
+        district = District.objects.get(pk=district_id)
+    except District.DoesNotExist:
+        raise Http404('District does not exist')
+
+    return render(request, 'services/view_district.html', {'district': district})
 
 def view_service(request, service_id):
     try:
