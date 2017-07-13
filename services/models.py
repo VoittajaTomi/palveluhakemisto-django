@@ -35,8 +35,8 @@ class District(models.Model):
     description = models.CharField(max_length=50)
     name = models.CharField(max_length=50)
     shortname = models.CharField(max_length=50)
-    ctr_lat = models.FloatField()
-    ctr_lon = models.FloatField()
+    ctr_lat = models.FloatField(default=60.192059)
+    ctr_lon = models.FloatField(default=24.945831)
 
     def __str__(self):
         return self.name
@@ -57,3 +57,8 @@ class AnonymousServiceForm(forms.ModelForm):
     class Meta:
         model = Service
         fields = ('description', 'district', 'address', 'gps_lat', 'gps_lon')
+        widgets = {
+            'gps_lat': forms.NumberInput(attrs={'class':'kakka'}),
+            'gps_lon': forms.NumberInput(attrs={'class': 'kakka'}),
+        }
+

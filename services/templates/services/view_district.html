@@ -3,8 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
 </head>
 <body>
 District {{ district.name }}
+<div id="app">
+<yandex-map :coords="[{{ district.ctr_lat }}, {{ district.ctr_lon }}]"
+            zoom="10"
+            style="width: 600px; height: 600px;">
+
+    {% for s in services %}
+
+    <ymap-marker marker-type="placemark"
+                 :coords="[{{ s.gps_lat }}, {{ s.gps_lon }}]"
+                 hint-content="Hint content 1"
+                 :balloon="{header: 'header', body: 'body', footer: 'footer'}"
+                 :icon="{color: 'green', glyph: 'cinema'}"></ymap-marker>
+
+
+    {% endfor %}
+
+</yandex-map>
+</div>
+<script src="https://cdn.css.net/libs/vue/2.0.3/vue.js"></script>
+<script src="https://unpkg.com/vue-yandex-maps"></script>
+<script>
+	new Vue({
+		el: '#app'
+	})
+</script>
 </body>
 </html>

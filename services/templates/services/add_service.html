@@ -4,9 +4,132 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="//api-maps.yandex.ru/2.1/?lang=en_US" type="text/javascript"></script>
+    <script src="//yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
+    <script>
 
+        jQuery(function () {
+    ymaps.ready(init);
+});
+
+function init () {
+    var map = new ymaps.Map('map', {
+            center: [60.192059,24.945831],
+            zoom: 10
+        }, {
+            searchControlProvider: 'yandex#search'
+        }),
+        markerElement = jQuery('#marker'),
+        dragger = new ymaps.util.Dragger({
+            // Dragger will automatically run when the user clicks on the 'marker' element.
+            autoStartElement: markerElement[0]
+        }),
+        // The offset of the marker relative to the cursor.
+        markerOffset,
+        markerPosition;
+
+    dragger.events
+        .add('start', onDraggerStart)
+        .add('move', onDraggerMove)
+        .add('stop', onDraggerEnd);
+
+    function onDraggerStart(event) {
+        var offset = markerElement.offset(),
+            position = event.get('position');
+        // Saving the offset of the marker relative to the drag starting point.
+        markerOffset = [
+            position[0] - offset.left,
+            position[1] - offset.top
+        ];
+        markerPosition = [
+            position[0] - markerOffset[0],
+            position[1] - markerOffset[1]
+        ];
+
+        applyMarkerPosition();
+    }
+
+    function onDraggerMove(event) {
+        applyDelta(event);
+    }
+
+    function onDraggerEnd(event) {
+        applyDelta(event);
+        markerPosition[0] += markerOffset[0];
+        markerPosition[1] += markerOffset[1];
+        // Converting page coordinates to global pixel coordinates.
+        var markerGlobalPosition = map.converter.pageToGlobal(markerPosition),
+            // Getting the center of the map in global pixel coordinates.
+            mapGlobalPixelCenter = map.getGlobalPixelCenter(),
+            // Getting the size of the map container on the page.
+            mapContainerSize = map.container.getSize(),
+            mapContainerHalfSize = [mapContainerSize[0] / 2, mapContainerSize[1] / 2],
+            // Calculating the map boundaries in global pixel coordinates.
+            mapGlobalPixelBounds = [
+                [mapGlobalPixelCenter[0] - mapContainerHalfSize[0], mapGlobalPixelCenter[1] - mapContainerHalfSize[1]],
+                [mapGlobalPixelCenter[0] + mapContainerHalfSize[0], mapGlobalPixelCenter[1] + mapContainerHalfSize[1]]
+            ];
+        // Checking that the dragger finished working in a visible area of the map.
+        if (containsPoint(mapGlobalPixelBounds, markerGlobalPosition)) {
+            // Now we'll convert the global pixel coordinates to geocoordinates with the current zoom level of the map.
+            var geoPosition = map.options.get('projection').fromGlobalPixels(markerGlobalPosition, map.getZoom());
+            alert(geoPosition.join(' '));
+        }
+    }
+
+    function applyDelta (event) {
+        // The 'delta' field contains the difference between the positions of the current and previous dragger events.
+        var delta = event.get('delta');
+        markerPosition[0] += delta[0];
+        markerPosition[1] += delta[1];
+        applyMarkerPosition();
+    }
+
+    function applyMarkerPosition () {
+        markerElement.css({
+            left: markerPosition[0],
+            top: markerPosition[1]
+        });
+    }
+
+    function containsPoint (bounds, point) {
+        return point[0] >= bounds[0][0] && point[0] <= bounds[1][0] &&
+               point[1] >= bounds[0][1] && point[1] <= bounds[1][1];
+    }
+}
+
+
+    </script>
+
+    	<style>
+        body, html {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            font-family: Arial;
+        }
+        #map {
+            width: 100%;
+            height: 60%;
+        }
+
+        #marker {
+            background-image: url('/static/map-marker-icon.png');
+            width: 33px;
+            height: 36px;
+            position: absolute;
+        }
+        .header {
+            padding: 5px;
+        }
+    </style>
 </head>
 <body>
+<p class="header">Dragging the placemark to the map</p>
+<div id="map"></div>
+<div id="marker"></div>
+
 Add service:
 
 <form action="/services/add" method="post">

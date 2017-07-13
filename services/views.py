@@ -24,7 +24,7 @@ def view_district(request, district_id):
     except District.DoesNotExist:
         raise Http404('District does not exist')
 
-    return render(request, 'services/view_district.html', {'district': district})
+    return render(request, 'services/view_district.html', {'district': district, 'services': district.service_set.all()})
 
 def view_service(request, service_id):
     try:
