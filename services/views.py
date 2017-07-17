@@ -3,9 +3,30 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 
-from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 from .models import District, Service, AnonymousServiceForm
+
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
+
+from .serializers import ServiceSerializer, DistrictSerializer
+
+@csrf_exempt
+def rest_all_services(request):
+    services = Service.objects.all()
+    serializer = ServiceSerializer(services, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+
+@csrf_exempt
+def rest_all_districts(request):
+    districts = District.objects.all()
+    serializer = DistrictSerializer(districts, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+
 
 
 def index(request):

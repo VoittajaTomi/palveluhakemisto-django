@@ -42,7 +42,7 @@ class District(models.Model):
         return self.name
 
 class Service(models.Model):
-    district = models.ForeignKey(District, on_delete=models.CASCADE)
+    district = models.ForeignKey(District, on_delete=models.CASCADE, related_name='services')
     description = models.CharField(max_length=50)
     address = models.CharField(max_length=100)
     gps_lat = models.FloatField()

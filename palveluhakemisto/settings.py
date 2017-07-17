@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'services',
     'floppyforms',
     'rest_framework',
-    'api.apps.ApiConfig'
+    #'services.apps.ServicesConfig'
 
 ]
 
