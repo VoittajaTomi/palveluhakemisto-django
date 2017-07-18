@@ -4,8 +4,8 @@ from __future__ import unicode_literals
 from django.db import models
 
 # Create your models here.
-import floppyforms.__future__ as forms
-#from django import forms
+#import floppyforms.__future__ as forms
+from django import forms
 
 """
 

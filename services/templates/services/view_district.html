@@ -3,34 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="//api-maps.yandex.ru/2.1/?lang=ru-RU" type="text/javascript"></script>
+    <script src="//yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script>
+        ymaps.ready(init);
 
+function init () {
+    var myMap = new ymaps.Map('map', {
+            center: [{{ district.ctr_lat }}, {{ district.ctr_lon }}],
+            zoom: 15
+        }, {
+            searchControlProvider: 'yandex#search'
+        }),
+        objectManager = new ymaps.ObjectManager({
+            // Setting an option to make placemarks start clusterizing.
+            clusterize: false,
+            // ObjectManager accepts the same options as the clusterer.
+            gridSize: 32,
+            clusterDisableClickZoom: true
+        });
+
+        document.mapObjectManager = objectManager;
+        document.myMap = myMap;
+
+
+
+    /**
+     * To set options for single objects and clusters,
+     * we refer to child collections of ObjectManager.
+     */
+    objectManager.objects.options.set('preset', 'islands#greenDotIcon');
+    objectManager.clusters.options.set('preset', 'islands#greenClusterIcons');
+    myMap.geoObjects.add(objectManager);
+
+    $.ajax({
+        url: "/services/district/{{ district.pk }}/yandexmaps.json"
+    }).done(function(data) {
+        objectManager.add(data);
+
+                var objectState = objectManager.getObjectState(1);
+        if (objectState.isClustered) {
+            // Making sure that the specified object has been "selected" in the balloon.
+            objectManager.clusters.state.set('activeObject', objectManager.objects.getById(1));
+            /**
+             * All the generated clusters have unique identifiers.
+             * This identifier must be passed to the balloon manager to specify
+             * which cluster to show the balloon on.
+             */
+            objectManager.clusters.balloon.open(objectState.cluster.id);
+        } else {
+            objectManager.objects.balloon.open(1);
+        }
+
+    });
+
+}
+
+    </script>
+    	<style>
+        html, body, #map {
+            width: 400px; height: 400px; padding: 0; margin: 0;
+        }
+        a {
+            color: #04b; /* Link color */
+            text-decoration: none; /* Removing uderline from links */
+        }
+        a:visited {
+            color: #04b; /* Visited link color */
+        }
+        a:hover {
+            color: #f50000; /* Link color when hovering */
+        }
+    </style>
 </head>
 <body>
 District {{ district.name }}
-<div id="app">
-<yandex-map :coords="[{{ district.ctr_lat }}, {{ district.ctr_lon }}]"
-            zoom="10"
-            style="width: 600px; height: 600px;">
-
-    {% for s in services %}
-
-    <ymap-marker marker-type="placemark"
-                 :coords="[{{ s.gps_lat }}, {{ s.gps_lon }}]"
-                 hint-content="Hint content 1"
-                 :balloon="{header: 'header', body: 'body', footer: 'footer'}"
-                 :icon="{color: 'green', glyph: 'cinema'}"></ymap-marker>
-
-
-    {% endfor %}
-
-</yandex-map>
+<div id="map">
 </div>
-<script src="https://cdn.css.net/libs/vue/2.0.3/vue.js"></script>
-<script src="https://unpkg.com/vue-yandex-maps"></script>
-<script>
-	new Vue({
-		el: '#app'
-	})
-</script>
+<div class="container">
+    <ul>
+        {% for s in services %}
+        <li><a href="#" onclick="document.mapObjectManager.objects.balloon.open({{ s.pk }})">{{ s.description }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
 </body>
 </html>

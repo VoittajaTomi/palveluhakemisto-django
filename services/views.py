@@ -11,6 +11,8 @@ from .models import District, Service, AnonymousServiceForm
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 
+import json
+
 from .serializers import ServiceSerializer, DistrictSerializer
 
 @csrf_exempt
@@ -26,6 +28,32 @@ def rest_all_districts(request):
     serializer = DistrictSerializer(districts, many=True)
     return JsonResponse(serializer.data, safe=False)
 
+
+def yandex_maps_render_balloon_content(service):
+    return {'balloonContentHeader': '<p>%s</p>' % service.description,
+            'balloonContentBody': '<p>Your name: <input name=\'login\'></p><p><em>The phone in the format 2xxx-xxx:</em>  <input></p><p><input type=\'submit\' value=\'Send\'></p>',
+            'balloonContentFooter': '<p>Footer</p>'
+            }
+
+
+def yandex_maps_json_feed_for_district(request, district_id):
+    result = {'type' : 'FeatureCollection', 'features': []}
+    feature_list = []
+    district = District.objects.get(pk=district_id)
+    for s in district.services.all():
+        feature_list.append(
+            {'type': 'Feature',
+             'id': s.pk,
+             'geometry': {'type': 'Point',
+                          'coordinates': [s.gps_lat, s.gps_lon]},
+             'properties': yandex_maps_render_balloon_content(s)
+             }
+        )
+
+    result['features'] = feature_list
+
+
+    return HttpResponse(json.dumps(result),content_type="text/json")
 
 
 
@@ -45,7 +73,7 @@ def view_district(request, district_id):
     except District.DoesNotExist:
         raise Http404('District does not exist')
 
-    return render(request, 'services/view_district.html', {'district': district, 'services': district.service_set.all()})
+    return render(request, 'services/view_district.html', {'district': district, 'services': district.services.all()})
 
 def view_service(request, service_id):
     try:
