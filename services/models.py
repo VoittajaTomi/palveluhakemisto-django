@@ -2,6 +2,8 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from taggit.managers import TaggableManager
+
 
 # Create your models here.
 #import floppyforms.__future__ as forms
@@ -47,6 +49,7 @@ class Service(models.Model):
     address = models.CharField(max_length=100)
     gps_lat = models.FloatField()
     gps_lon = models.FloatField()
+    tags = TaggableManager()
 
     def __str__(self):
         return self.description
@@ -56,7 +59,7 @@ class Service(models.Model):
 class AnonymousServiceForm(forms.ModelForm):
     class Meta:
         model = Service
-        fields = ('description', 'district', 'address', 'gps_lat', 'gps_lon')
+        fields = ('description', 'district', 'address', 'gps_lat', 'gps_lon', 'tags')
         widgets = {
             'gps_lat': forms.NumberInput(attrs={'class':'kakka'}),
             'gps_lon': forms.NumberInput(attrs={'class': 'kakka'}),

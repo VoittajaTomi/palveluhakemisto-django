@@ -29,6 +29,8 @@ ALLOWED_HOSTS = []
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
+TAGGIT_CASE_INSENSITIVE = True
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
     'services',
     'floppyforms',
     'rest_framework',
+    'taggit'
     #'services.apps.ServicesConfig'
 
 ]
