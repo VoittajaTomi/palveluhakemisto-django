@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'services',
     'floppyforms',
     'rest_framework',
-    'taggit'
+    'taggit',
+    'taggit_serializer'
     #'services.apps.ServicesConfig'
 
 ]

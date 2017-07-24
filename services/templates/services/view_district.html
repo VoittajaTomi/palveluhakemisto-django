@@ -7,6 +7,8 @@
     <script src="//yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
     <script src="https://unpkg.com/vue"></script>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <script>
         ymaps.ready(init);
 
@@ -81,26 +83,28 @@ District {{ district.name }}
 
 
 <div class="container">
-    <div id="map">
+        <div class="col-sm-4">
+        <div id="app">[[ message ]]</div>
+
+        <ul class="list-group">
+            {% for s in services %}
+            <li class="list-group-item"><a href="#" onclick="document.mapObjectManager.objects.balloon.open({{ s.pk }})">{{ s.description }}</a></li>
+            {% endfor %}
+        </ul>
     </div>
-    <div id="app">
-  [[ message ]]
-    <ul>
-        {% for s in services %}
-        <li><a href="#" onclick="document.mapObjectManager.objects.balloon.open({{ s.pk }})">{{ s.description }}</a></li>
-        {% endfor %}
-    </ul>
+    <div class="row">
+        <div class="col-sm-4">
+            <div id="map">
+            </div>
         </div>
+        <div class="col-sm-4">
+Lorem ipsum dolor sit amet consectetur adipiscing elit fusce, aenean parturient senectus sociosqu consequat felis ligula, habitasse mollis class pretium penatibus vivamus ante. Non per primis nullam turpis duis tristique erat nam, parturient sagittis montes felis maecenas fermentum feugiat volutpat, vestibulum nulla nibh faucibus egestas euismod sollicitudin. Sollicitudin netus luctus tempor sociosqu auctor convallis tortor sociis, erat rutrum nascetur neque platea cursus gravida, eu ac dis natoque nisi mollis fusce. Ornare gravida arcu rutrum in tempor hac venenatis faucibus aenean, a morbi netus ad quam facilisis id aptent, ullamcorper euismod natoque fringilla auctor torquent nisl tellus. Arcu turpis habitasse natoque eros pretium cursus odio feugiat potenti scelerisque varius iaculis facilisis morbi fames orci, nascetur suscipit conubia montes velit phasellus sed faucibus consequat habitant a magna laoreet aptent. Ullamcorper ante lobortis vitae curabitur nulla suscipit inceptos in bibendum, aptent imperdiet cum mollis class nascetur nibh curae, at gravida purus risus sed vel sagittis non. Ultricies
+        </div>
+    </div>
 </div>
 
-<script>
-    var app = new Vue({
-  el: '#app',
-  delimiters: ['[[', ']]'],
-  data: {
-    message: 'Hello Vue!'
-  }
-})
+<script src="/static/js/view_district.js">
+
 </script>
 </body>
 </html>
