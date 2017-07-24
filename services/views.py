@@ -6,8 +6,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
-from .models import District, Service
-from .forms import AnonymousServiceForm
+from .models import District, Service, ContactInfo
+from .forms import AnonymousServiceForm, ContactInfoForm
 
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
@@ -89,7 +89,11 @@ def view_service(request, service_id):
     return render(request,'services/view_service.html', {'service' : service})
 
 def add_service(request):
-    ContactInfoFormSet = inlineformset_factory(District, Service, fields=('address', 'phone', 'zip', 'url',))
+    ContactInfoFormSet = inlineformset_factory(ContactInfo, Service, form=ContactInfoForm)
+    contact_info = ContactInfo()
+    formset = ContactInfoFormSet(instance=contact_info)
+    formset.save()
+
 
 
     if request.method == 'POST':
@@ -101,7 +105,7 @@ def add_service(request):
             form_lat = form.cleaned_data['gps_lat']
             form_lon = form.cleaned_data['gps_lon']
             form_tags = form.cleaned_data['tags']
-            service = Service.objects.create(description=form_desc, district=form_district, address = form_address, gps_lat = form_lat, gps_lon = form_lon,)
+            service = Service.objects.create(description=form_desc, district=form_district, gps_lat=form_lat, gps_lon=form_lon,)
             map(service.tags.add, form_tags)
             #for t in form_tags:
             #    service.tags.add(t)

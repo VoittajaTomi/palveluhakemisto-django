@@ -49,6 +49,10 @@ class ContactInfo(models.Model):
     url = models.CharField(max_length=3000, default='',blank=True)
 
 
+
+
+
+
 class Service(models.Model):
     district = models.ForeignKey(District, on_delete=models.CASCADE, related_name='services')
     description = models.CharField(max_length=100)

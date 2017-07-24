@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django import forms
 from .models import Service, District
 
-
+from .models import ContactInfo
 
 class AnonymousServiceForm(forms.ModelForm):
     class Meta:
@@ -16,3 +16,7 @@ class AnonymousServiceForm(forms.ModelForm):
         }
 
 
+class ContactInfoForm(forms.ModelForm):
+    class Meta:
+        model = ContactInfo
+        fields = ('address','phone','zip','url')
