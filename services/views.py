@@ -6,7 +6,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
-from .models import District, Service, AnonymousServiceForm
+from .models import District, Service
+from .forms import AnonymousServiceForm
 
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
@@ -14,6 +15,10 @@ from rest_framework.parsers import JSONParser
 import json
 
 from .serializers import ServiceSerializer, DistrictSerializer
+
+from django.forms import inlineformset_factory
+
+
 
 @csrf_exempt
 def rest_all_services(request):
@@ -84,6 +89,8 @@ def view_service(request, service_id):
     return render(request,'services/view_service.html', {'service' : service})
 
 def add_service(request):
+    ContactInfoFormSet = inlineformset_factory(District, Service, fields=('address', 'phone', 'zip', 'url',))
+
 
     if request.method == 'POST':
         form = AnonymousServiceForm(request.POST)
