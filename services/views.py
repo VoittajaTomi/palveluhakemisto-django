@@ -89,16 +89,15 @@ def view_service(request, service_id):
     return render(request,'services/view_service.html', {'service' : service})
 
 def add_service(request):
-    ContactInfoFormSet = inlineformset_factory(ContactInfo, Service, form=ContactInfoForm)
-    contact_info = ContactInfo()
-    formset = ContactInfoFormSet(instance=contact_info)
-    formset.save()
+
 
 
 
     if request.method == 'POST':
         form = AnonymousServiceForm(request.POST)
-        if form.is_valid():
+        contactinfoform = ContactInfoForm(request.POST)
+        if form.is_valid() and contactinfoform.is_valid():
+            #import ipdb;ipdb.set_trace()
             form_desc = form.cleaned_data['description']
             form_district = form.cleaned_data['district']
             #form_address = form.cleaned_data['address']
@@ -114,4 +113,4 @@ def add_service(request):
 
             return HttpResponseRedirect('/services')
     else:
-        return render(request,'services/add_service.html', {'myform': AnonymousServiceForm})
+        return render(request,'services/add_service.html', {'myform': AnonymousServiceForm, 'contactform': ContactInfoForm})

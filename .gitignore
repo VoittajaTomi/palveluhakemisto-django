@@ -2,3 +2,5 @@ db.sqlite3
 *.pyc
 venv
 .idea/
+**/.idea/workspace.xml
+**/.idea/tasks.xml

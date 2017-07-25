@@ -9,7 +9,7 @@ from .models import ContactInfo
 class AnonymousServiceForm(forms.ModelForm):
     class Meta:
         model = Service
-        fields = ('description', 'district', 'contact_info', 'gps_lat', 'gps_lon', 'tags')
+        fields = ('description', 'district', 'gps_lat', 'gps_lon', 'tags')
         widgets = {
             'gps_lat': forms.NumberInput(attrs={'class':'kakka'}),
             'gps_lon': forms.NumberInput(attrs={'class': 'kakka'}),
