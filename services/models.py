@@ -9,28 +9,6 @@ from taggit.managers import TaggableManager
 # Create your models here.
 #import floppyforms.__future__ as forms
 
-"""
-
-    __tablename__ = 'services'
-    district_id = db.Column(db.Integer, db.ForeignKey('districts.id'), primary_key=True)
-    service_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    district = db.relationship('District', backref='services')
-    desc = db.Column(db.String(50))
-    address = db.Column(db.String(50))
-    gps_lat = db.Column(db.Float)
-    gps_lon = db.Column(db.Float)
-
-
-    __tablename__ = 'districts'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(50))
-    desc = db.Column(db.String(50))
-
-    def __str__(self):
-        return self.desc
-
-
-"""
 
 
 class District(models.Model):
@@ -45,23 +23,20 @@ class District(models.Model):
 class ContactInfo(models.Model):
     address = models.CharField(max_length=100, default='', blank=True)
     phone = models.CharField(max_length=21, default='', blank=True)
-    zip = models.PositiveIntegerField(default=00100)
+    zip = models.CharField(max_length=5, blank=True)
     url = models.CharField(max_length=3000, default='',blank=True)
-
-
-
-
-
 
 class Service(models.Model):
     district = models.ForeignKey(District, on_delete=models.CASCADE, related_name='services')
     description = models.CharField(max_length=100)
-
     gps_lat = models.FloatField()
     gps_lon = models.FloatField()
     tags = TaggableManager()
     contact_info = models.OneToOneField(ContactInfo)
     is_accessible = models.BooleanField(default=True)
+
+    def taglist(self):
+        return ','.join(list(t.name for t in self.tags.all()))
 
     def __str__(self):
         return self.description

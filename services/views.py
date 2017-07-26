@@ -36,8 +36,8 @@ def rest_all_districts(request):
 
 def service_to_html(service):
     return {'balloonContentHeader': '<p>%s</p>' % service.description,
-            'balloonContentBody': 'Lorem ipsum dolor sit amet consectetur adipiscing elit fusce, aenean parturient senectus sociosqu consequat felis ligula, habitasse mollis class pretium penatibus vivamus ante. Non per primis nullam turpis duis tristique erat nam, parturient sagittis montes felis maecenas fermentum feugiat volutpat, vestibulum nulla nibh faucibus egestas euismod sollicitudin. Sollicitudin netus luctus tempor sociosqu auctor convallis tortor sociis, erat rutrum nascetur neque platea cursus gravida, eu ac dis natoque nisi mollis fusce. Ornare gravida arcu rutrum in tempor hac venenatis faucibus aenean, a morbi netus ad quam facilisis id aptent, ullamcorper euismod natoque fringilla auctor torquent nisl tellus. Arcu turpis habitasse natoque eros pretium cursus odio feugiat potenti scelerisque varius iaculis facilisis morbi fames orci, nascetur suscipit conubia montes velit phasellus sed faucibus consequat habitant a magna laoreet aptent. Ullamcorper ante lobortis vitae curabitur nulla suscipit inceptos in bibendum, aptent imperdiet cum mollis class nascetur nibh curae, at gravida purus risus sed vel sagittis non. Ultricies laoreet lectus orci turpis lobortis odio proin varius ultrices in mattis, a egestas scelerisque donec morbi sagittis himenaeos eget quis platea, sodales dapibus nullam aptent penatibus condimentum hac parturient fermentum fringilla.',
-            'balloonContentFooter': '<p>Footer</p>'
+            'balloonContentBody': 'Address: %s<br>Phone: %s<br>Url<a href="%s">www</a>' % (service.contact_info.address, service.contact_info.phone, service.contact_info.url,),
+            'balloonContentFooter': '<p>Helsingin kaupunginosayhdistykset Ry 2017</p>'
             }
 
 
@@ -90,9 +90,6 @@ def view_service(request, service_id):
 
 def add_service(request):
 
-
-
-
     if request.method == 'POST':
         form = AnonymousServiceForm(request.POST)
         contactinfoform = ContactInfoForm(request.POST)
@@ -104,11 +101,13 @@ def add_service(request):
             form_lat = form.cleaned_data['gps_lat']
             form_lon = form.cleaned_data['gps_lon']
             form_tags = form.cleaned_data['tags']
-            service = Service.objects.create(description=form_desc, district=form_district, gps_lat=form_lat, gps_lon=form_lon,)
+            form_address = contactinfoform.cleaned_data['address']
+            form_phone = contactinfoform.cleaned_data['phone']
+            form_zip = contactinfoform.cleaned_data['zip']
+            form_url = contactinfoform.cleaned_data['url']
+            contactinfo = ContactInfo.objects.create(address=form_address, zip=form_zip, url=form_url, phone=form_phone)
+            service = Service.objects.create(description=form_desc, district=form_district, gps_lat=form_lat, gps_lon=form_lon, contact_info=contactinfo)
             map(service.tags.add, form_tags)
-            #for t in form_tags:
-            #    service.tags.add(t)
-
             service.save()
 
             return HttpResponseRedirect('/services')
