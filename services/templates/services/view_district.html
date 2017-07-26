@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-        <link rel="stylesheet" type="text/css" href="/static/css/tagsort.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/tagsort.min.css">
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="//api-maps.yandex.ru/2.1/?lang=en-US" type="text/javascript"></script>
     <script src="//yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
-    <script src="https://unpkg.com/vue"></script>
-    <script src="/static/js/tagsort.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/js/tagsort.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
     $(function(){
         $('div.tags-container').tagSort({
@@ -91,28 +90,24 @@ function init () {
     </style>
 </head>
 <body>
-District {{ district.name }}
-
 
 <div class="container">
-
         <div class="col-sm-4">
-        <div id="app">[[ message ]]</div>
-
-        <ul class="list-group">
-            {% for s in services %}
-            <li class="list-group-item"><a href="#" onclick="document.mapObjectManager.objects.balloon.open({{ s.pk }})" data-item-tags="{{ s.taglist }}" class="item-to-filter">{{ s.description }}</a></li>
-            {% endfor %}
-        </ul>
-    </div>
+            <div class="tags-container"></div>
+        </div>
     <div class="row">
         <div class="col-sm-4">
             <div id="map">
             </div>
         </div>
         <div class="col-sm-4">
-<div class="tags-container"></div>
+            <ul class="list-group">
+                {% for s in services %}
+                <li class="list-group-item"><a href="#" onclick="document.mapObjectManager.objects.balloon.open({{ s.pk }})" data-item-tags="{{ s.taglist }}" class="item-to-filter">{{ s.description }}</a></li>
+                {% endfor %}
+            </ul>
         </div>
+
     </div>
 </div>
 
