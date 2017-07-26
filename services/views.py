@@ -35,9 +35,9 @@ def rest_all_districts(request):
 
 
 def service_to_html(service):
-    return {'balloonContentHeader': '<p>%s</p>' % service.description,
+    return {'balloonContentHeader': '<p>%s</p> Tags: %s' % (service.description,service.taglist(),),
             'balloonContentBody': 'Address: %s<br>Phone: %s<br>Url<a href="%s">www</a>' % (service.contact_info.address, service.contact_info.phone, service.contact_info.url,),
-            'balloonContentFooter': '<p>Helsingin kaupunginosayhdistykset Ry 2017</p>'
+            'balloonContentFooter': '<p>x</p>'
             }
 
 
