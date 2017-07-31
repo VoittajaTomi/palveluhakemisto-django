@@ -2,6 +2,7 @@
 backports.shutil-get-terminal-size==1.0.0
 decorator==4.1.2
 Django==1.11.2
+django-floppyforms==1.7.0
 django-taggit==0.22.1
 django-taggit-serializer==0.1.5
 djangorestframework==3.6.3
