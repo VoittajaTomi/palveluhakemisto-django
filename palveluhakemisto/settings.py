@@ -25,7 +25,7 @@ SECRET_KEY = '2m1pld5l7d#@e!udfo=i266l-(@ymfccsooyumuchdnc=-#)=9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['helkary.pythonanywhere.com']
+ALLOWED_HOSTS = ['helkary.pythonanywhere.com', 'localhost']
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
