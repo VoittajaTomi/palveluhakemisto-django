@@ -11,7 +11,7 @@
     <script type="text/javascript">
     $(function(){
         $('div.tags-container').tagSort({
-        items:'.item-to-filter',
+        items:'.list-group-item',
         itemTagsView: '.item-tags',
         });
     });
@@ -32,7 +32,7 @@ function init () {
         }),
         objectManager = new ymaps.ObjectManager({
             // Setting an option to make placemarks start clusterizing.
-            clusterize: false,
+            clusterize: true,
             // ObjectManager accepts the same options as the clusterer.
             gridSize: 32,
             clusterDisableClickZoom: true
@@ -87,37 +87,59 @@ function init () {
         a:hover {
             color: #f50000; /* Link color when hovering */
         }
+
+        #theMap {
+   width: 5em;
+   height: 5em;
+   background-color: #00f;
+   position: absolute;
+   top: 1em;
+   left: 10em;
+ }
+
+ #wrapper {
+    margin-left:auto;
+    margin-right:auto;
+    width:960px;
+}
     </style>
 </head>
 <body>
 
+<div class="wrapper">
 <div class="container">
-    <div class="col-md-6">
 
         <div class="row">
             <div class="col-md-6">
-            <ul class="list-group">
-                {% for s in services %}
-                <li class="list-group-item"><a href="#" onclick="document.mapObjectManager.objects.balloon.open({{ s.pk }})" data-item-tags="{{ s.taglist }}" class="item-to-filter">{{ s.description }}</a></li>
-                {% endfor %}
-            </ul>
+                <div class="tags-container"></div>
+            </div>
         </div>
+    <div class="row">
 
         <div class="col-md-6">
-            <div class="tags-container"></div>
-        </div>
-        </div>
 
-
-        <div class="col-md-6">
             <div id="map">
             </div>
         </div>
     </div>
+    <div class="row">
+          <div class="col-md-6">
+            <ul class="list-group aaa">
+                {% for s in services %}
+                <li class="list-group-item" data-item-tags="{{ s.taglist }}"><a href="#" onclick="document.mapObjectManager.objects.balloon.open({{ s.pk }})"  class="item-to-filter"><h3>{{ s.description }}</h3></a></li>
+                {% endfor %}
+            </ul>
+
+        </div>
+    </div>
+
+
+
+
+
+    </div>
 </div>
 
-<script src="static/js/view_district.js">
-
-</script>
+</div>
 </body>
 </html>
