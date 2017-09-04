@@ -3,11 +3,13 @@ from __future__ import unicode_literals
 
 from django.db import models
 from taggit.managers import TaggableManager
+from django.contrib.auth.models import AbstractUser
 
 #from .forms import AnonymousServiceForm
 
 # Create your models here.
 #import floppyforms.__future__ as forms
+
 
 
 
@@ -43,3 +45,5 @@ class Service(models.Model):
 
 
 
+class Profile(AbstractUser):
+    admin_district = models.OneToOneField(District, related_name='admin')
