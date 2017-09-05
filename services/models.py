@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from taggit.managers import TaggableManager
-from django.contrib.auth.models import AbstractUser
+
 
 #from .forms import AnonymousServiceForm
 
@@ -44,6 +44,3 @@ class Service(models.Model):
         return self.description
 
 
-
-class Profile(AbstractUser):
-    admin_district = models.OneToOneField(District, related_name='admin')
