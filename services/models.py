@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from taggit.managers import TaggableManager
 
-
+from django.contrib.auth.models import User
 #from .forms import AnonymousServiceForm
 
 # Create your models here.
